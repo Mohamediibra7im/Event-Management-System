@@ -106,7 +106,7 @@ EVENT-MANAGEMENT-SYSTEM/
 
 - **Ahmed Khairy**:  [GitHub](https://github.com/Ahmedkhairy0106) | [LinkedIn](https://www.linkedin.com/in/ahmedkhairy010)
 
-- **Haidy Hossam**: [LinkedIn](https://www.linkedin.com/in/haidyhosam93/)
+- **Haidy Hossam**: [GitHub](https://github.com/Haidy-Hosam) | [LinkedIn](https://www.linkedin.com/in/haidyhosam93/)
 
 - **Yehia Khalid**:  [GitHub](https://github.com/lazydiv) | [LinkedIn](https://www.linkedin.com/in/lazy-dev/)
 
