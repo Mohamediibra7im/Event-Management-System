@@ -1,6 +1,6 @@
-import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import javax.swing.*;
 
 public class EventManagementSystem {
     public static void main(String[] args) {
@@ -120,21 +120,14 @@ public class EventManagementSystem {
 
             User user;
             switch (role) {
-                case "Customer":
-                    user = new Customer(username, password); 
-                    break;
-                case "ProjectManager":
-                    user = new ProjectManager(username, password); 
-                    break;
-                case "ServiceProvider":
-                    user = new ServiceProvider(username, password); 
-                    break;
-                case "Admin":
-                    user = new Admin(username, password); 
-                    break;
-                default:
+                case "Customer" -> user = new Customer(username, password);
+                case "ProjectManager" -> user = new ProjectManager(username, password);
+                case "ServiceProvider" -> user = new ServiceProvider(username, password);
+                case "Admin" -> user = new Admin(username, password);
+                default -> {
                     JOptionPane.showMessageDialog(frame, "Invalid role selected.");
                     return;
+                }
             }
 
             if (DataHandler.saveUser(user)) {
