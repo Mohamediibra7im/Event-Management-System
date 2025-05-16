@@ -19,7 +19,7 @@ public class DataHandler {
             writer.write(user.getUsername() + "," + user.getRole() + "," + user.getPassword() + "\n");
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error saving user: " + e.getMessage());
             return false;
         }
     }
@@ -41,27 +41,18 @@ public class DataHandler {
                     String role = parts[1];
                     String password = parts[2];
                     switch (role) {
-                        case "Customer":
-                            users.add(new Customer(username, password));
-                            break;
-                        case "ProjectManager":
-                            users.add(new ProjectManager(username, password));
-                            break;
-                        case "ServiceProvider":
-                            users.add(new ServiceProvider(username, password));
-                            break;
-                        case "Admin":
-                            users.add(new Admin(username, password));
-                            break;
-                        default:
-                            System.out.println("Invalid role in users file: " + role);
+                        case "Customer" -> users.add(new Customer(username, password));
+                        case "ProjectManager" -> users.add(new ProjectManager(username, password));
+                        case "ServiceProvider" -> users.add(new ServiceProvider(username, password));
+                        case "Admin" -> users.add(new Admin(username, password));
+                        default -> System.out.println("Invalid role in users file: " + role);
                     }
                 } else {
                     System.out.println("Invalid line in users file: " + line);
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error loading users: " + e.getMessage());
         }
         return users;
     }
@@ -71,16 +62,16 @@ public class DataHandler {
             // Save event fields separated by |, matching loadEvents()
             // eventId|customerUsername|details|status|assignedPM|price|readyDate
             writer.write(event.getEventId() + "|" +
-                         event.getCustomerUsername() + "|" +
-                         event.getDetails().replace("|", "/") + "|" +
-                         event.getStatus() + "|" +
-                         event.getAssignedPM() + "|" +
-                         event.getPrice() + "|" +
-                         (event.getReadyDate() == null ? "" : event.getReadyDate())
+                        event.getCustomerUsername() + "|" +
+                        event.getDetails().replace("|", "/") + "|" +
+                        event.getStatus() + "|" +
+                        event.getAssignedPM() + "|" +
+                        event.getPrice() + "|" +
+                        (event.getReadyDate() == null ? "" : event.getReadyDate())
             );
             writer.newLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error loading events: " + e.getMessage());
         }
     }
 
@@ -109,7 +100,7 @@ public class DataHandler {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error updating event: " + e.getMessage());
         }
         return events;
     }
@@ -125,7 +116,7 @@ public class DataHandler {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error saving chat message: " + e.getMessage());
         }
     }
 
@@ -133,7 +124,7 @@ public class DataHandler {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CHATS_FILE, true))) {
             writer.write(message.toFileString() + "\n");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error saving chat message: " + e.getMessage());
         }
     }
 
@@ -155,7 +146,7 @@ public class DataHandler {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error loading chat messages: " + e.getMessage());
         }
         return messages;
     }
