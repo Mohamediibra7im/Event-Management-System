@@ -18,8 +18,7 @@ public class Event {
     }
 
     public String toFileString() {
-        return String.join("|", eventId, customerUsername, details, status, 
-                          assignedPM, String.valueOf(price), readyDate);
+        return String.join("|", eventId, customerUsername, details, status, assignedPM, String.valueOf(price), readyDate);
     }
 
     public String getEventId() { return eventId; }
