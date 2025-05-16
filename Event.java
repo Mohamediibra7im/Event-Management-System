@@ -1,7 +1,7 @@
 public class Event {
-    private String eventId;
-    private String customerUsername;
-    private String details;
+    private final String eventId;
+    private final String customerUsername;
+    private final String details;
     private String status;
     private String assignedPM;
     private double price;

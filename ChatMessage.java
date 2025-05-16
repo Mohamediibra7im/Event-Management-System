@@ -1,8 +1,8 @@
 public class ChatMessage {
-    private String sender;
-    private String receiver;
-    private String message;
-    private String timestamp;
+    private final String sender;
+    private final String receiver;
+    private final String message;
+    private final String timestamp;
 
     public ChatMessage(String sender, String receiver, String message, String timestamp) {
         this.sender = sender;

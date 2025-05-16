@@ -107,3 +107,11 @@ The Event Management System is a Java-based desktop application designed to faci
 
 - **Yehia Khalid**:  [GitHub](https://github.com/lazydiv) | [LinkedIn](https://www.linkedin.com/in/lazy-dev/)
 
+## Team Members Task Distribution
+| Team Member | Task |
+|-------------|------|
+| Mohammed Ibrahim | Event, Chat Message |
+| Marwan Ashraf | Customer, Service Provider, Data Handler |
+| Mahmoud Gamal, Haidy Hossam | Project Manager, User |
+| Ahmed Khairy | Event Management System |
+| Yehia Khalid | Admin |
