@@ -4,6 +4,9 @@ import java.util.*;
 import java.util.List;
 
 public class ProjectManager extends User {
+    // Store followed Service Providers for this PM (in-memory for now)
+    private Set<String> followedSPs = new HashSet<>();
+
     public ProjectManager(String username, String password) {
         super(username, password, "ProjectManager");
     }
@@ -101,9 +104,17 @@ public class ProjectManager extends User {
         JTextField messageField = new JTextField();
         JButton sendButton = new JButton("Send");
 
+        // New: Send Request & Follow button
+        JButton requestFollowButton = new JButton("Send Request & Follow");
+
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(new JLabel("Select Service Provider:"), BorderLayout.WEST);
         topPanel.add(spCombo, BorderLayout.CENTER);
+
+        // Add the new button to the top panel
+        JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        topRightPanel.add(requestFollowButton);
+        topPanel.add(topRightPanel, BorderLayout.EAST);
 
         panel.add(topPanel, BorderLayout.NORTH);
         panel.add(new JScrollPane(chatArea), BorderLayout.CENTER);
@@ -133,6 +144,24 @@ public class ProjectManager extends User {
                 chatArea.append(chatMessage.toDisplayString() + "\n");
                 messageField.setText("");
             }
+        });
+
+        // New: Request & Follow logic
+        requestFollowButton.addActionListener(e -> {
+            String spUsername = (String) spCombo.getSelectedItem();
+            if (spUsername == null) {
+                JOptionPane.showMessageDialog(panel, "Please select a Service Provider.");
+                return;
+            }
+            if (followedSPs.contains(spUsername)) {
+                JOptionPane.showMessageDialog(panel, "You are already following this Service Provider.");
+                return;
+            }
+            // Optionally: send a system message to SP (simulate request)
+            ChatMessage requestMsg = new ChatMessage(getUsername(), spUsername, "[Request] Project Manager " + getUsername() + " wants to follow you.", new Date().toString());
+            DataHandler.saveChatMessage(requestMsg);
+            followedSPs.add(spUsername);
+            JOptionPane.showMessageDialog(panel, "Request sent and now following " + spUsername + ".");
         });
 
         // Load initial chat if any SP exists
