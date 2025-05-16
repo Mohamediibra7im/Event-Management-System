@@ -82,13 +82,15 @@ public class EventManagementSystem {
     }
 
     private static JPanel createRegisterPanel(JFrame frame) {
-        JPanel registerPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel registerPanel = new JPanel(new GridLayout(5, 2, 10, 10));
         registerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JLabel regUsernameLabel = new JLabel("Username:");
         JTextField regUsernameField = new JTextField();
         JLabel regPasswordLabel = new JLabel("Password:");
         JPasswordField regPasswordField = new JPasswordField();
+        JLabel regEmailLabel = new JLabel("Email:");
+        JTextField regEmailField = new JTextField();
         JLabel roleLabel = new JLabel("Role:");
         JComboBox<String> roleCombo = new JComboBox<>(new String[]{"Customer", "ProjectManager", "ServiceProvider", "Admin"});
         JButton submitButton = new JButton("Register");
@@ -97,6 +99,8 @@ public class EventManagementSystem {
         registerPanel.add(regUsernameField);
         registerPanel.add(regPasswordLabel);
         registerPanel.add(regPasswordField);
+        registerPanel.add(regEmailLabel);
+        registerPanel.add(regEmailField);
         registerPanel.add(roleLabel);
         registerPanel.add(roleCombo);
         registerPanel.add(new JLabel());
@@ -105,27 +109,28 @@ public class EventManagementSystem {
         submitButton.addActionListener(e -> {
             String username = regUsernameField.getText().trim();
             String password = new String(regPasswordField.getPassword()).trim();
+            String email = regEmailField.getText().trim();
             String role = (String) roleCombo.getSelectedItem();
 
             // Validate inputs
-            if (username.isEmpty() || password.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "Username and password cannot be empty.");
+            if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Username, password, and email cannot be empty.");
                 return;
             }
 
             User user;
             switch (role) {
                 case "Customer":
-                    user = new Customer(username, password);
+                    user = new Customer(username, password); 
                     break;
                 case "ProjectManager":
-                    user = new ProjectManager(username, password);
+                    user = new ProjectManager(username, password); 
                     break;
                 case "ServiceProvider":
-                    user = new ServiceProvider(username, password);
+                    user = new ServiceProvider(username, password); 
                     break;
                 case "Admin":
-                    user = new Admin(username, password);
+                    user = new Admin(username, password); 
                     break;
                 default:
                     JOptionPane.showMessageDialog(frame, "Invalid role selected.");
@@ -136,6 +141,7 @@ public class EventManagementSystem {
                 JOptionPane.showMessageDialog(frame, "User registered successfully!");
                 regUsernameField.setText("");
                 regPasswordField.setText("");
+                regEmailField.setText("");
             } else {
                 JOptionPane.showMessageDialog(frame, "Registration failed: Username already exists.");
             }
