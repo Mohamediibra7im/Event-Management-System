@@ -77,7 +77,6 @@ public class ServiceProvider extends User {
                         event.setStatus("Price Set by SP");
                         DataHandler.updateEvent(event);
                         JOptionPane.showMessageDialog(panel, "Price and ready date set.");
-                        // Optionally refresh the table here
                         return;
                     }
                 }
