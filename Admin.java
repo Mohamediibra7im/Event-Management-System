@@ -91,21 +91,15 @@ public class Admin extends User {
                 if (user.getUsername().equals(username)) {
                     // Create a new user object with the new role and same username/password
                     User updatedUser;
-                    switch (newRole) {
-                        case "Customer":
-                            updatedUser = new Customer(user.getUsername(), user.getPassword());
-                            break;
-                        case "ProjectManager":
-                            updatedUser = new ProjectManager(user.getUsername(), user.getPassword());
-                            break;
-                        case "ServiceProvider":
-                            updatedUser = new ServiceProvider(user.getUsername(), user.getPassword());
-                            break;
-                        case "Admin":
-                            updatedUser = new Admin(user.getUsername(), user.getPassword());
-                            break;
-                        default:
-                            return;
+                    updatedUser = switch (newRole) {
+                        case "Customer" -> new Customer(user.getUsername(), user.getPassword());
+                        case "ProjectManager" -> new ProjectManager(user.getUsername(), user.getPassword());
+                        case "ServiceProvider" -> new ServiceProvider(user.getUsername(), user.getPassword());
+                        case "Admin" -> new Admin(user.getUsername(), user.getPassword());
+                        default -> null;
+                    };
+                    if (updatedUser == null) {
+                        return;
                     }
                     // Replace user in list
                     usersList.set(usersList.indexOf(user), updatedUser);
@@ -120,7 +114,7 @@ public class Admin extends User {
                         writer.write(user.getUsername() + "," + user.getRole() + "," + user.getPassword() + "\n");
                     }
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(panel, "An error occurred while updating the user role: " + ex.getMessage());
                 }
                 JOptionPane.showMessageDialog(panel, "User role updated.");
                 // Refresh table
@@ -144,7 +138,7 @@ public class Admin extends User {
                         writer.write(user.getUsername() + "," + user.getRole() + "," + user.getPassword() + "\n");
                     }
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(panel, "An error occurred while deleting the user: " + ex.getMessage());
                 }
                 JOptionPane.showMessageDialog(panel, "User deleted.");
                 // Refresh table
