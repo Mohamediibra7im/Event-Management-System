@@ -1,101 +1,98 @@
+
 # Event Management System
 
-## Table of Contents
-
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Setup](#setup)
-4. [Directory Structure](#directory-structure)
-5. [Classes and Interfaces](#classes-and-interfaces)
-6. [Contributing](#contributing)
-7. [Collaborators and Team Members](#collaborators-and-team-members)
-
 ## Overview
-
-The Event Management System is a Java-based application designed to manage events, notifications, and user interactions. It provides a comprehensive platform for organizing and handling various aspects of event planning and execution.
+The Event Management System is a Java-based desktop application designed to facilitate event planning and coordination. It provides role-based dashboards for Customers, Project Managers, Service Providers, and Admins, allowing users to book events, manage bookings, assign project managers, set prices, and communicate via chat.
 
 ## Features
+- **User Roles**:
+  - **Customer**: Book events, manage bookings, and contact assigned Project Managers.
+  - **Project Manager**: View assigned events, send prices to customers, and communicate with Customers and Service Providers.
+  - **Service Provider**: View event requests, set prices and ready dates, and contact Project Managers.
+  - **Admin**: Manage users (update roles, delete users), assign events to Project Managers, and view all events.
+- **Authentication**: Login and registration with role selection (Customer, Project Manager, Service Provider, Admin).
+- **Event Management**: Book events with details (name, date, location, additional details), track event status, and update event information.
+- **Communication**: Role-specific chat functionality for collaboration between Customers, Project Managers, and Service Providers.
+- **Data Persistence**: Stores users, events, and chat messages in text files (`users.txt`, `events.txt`, `chats.txt`).
 
-- **Event Management**: Create, update, and delete events.
-- **Notification System**: Send notifications to users about upcoming events.
-- **User Management**: Manage user accounts and permissions.
-- **Admin and Customer Interfaces**: Different interfaces for administrators and customers.
-- **Data Persistence**: Store and retrieve data from text files.
+## Prerequisites
+- Java Development Kit (JDK) 8 or higher
+- A Java IDE (e.g., IntelliJ IDEA, Eclipse) or command-line tools for compilation and execution
 
-## Setup
+## Installation
+1. **Clone or Download the Project**:
+   - Clone the repository or download the source code.
+2. **Set Up the Project**:
+   - Import the project into your preferred IDE or navigate to the project directory.
+3. **Ensure File Structure**:
+   - The application expects the following files in the project root directory for data storage:
+     - `users.txt` (for user data)
+     - `events.txt` (for event data)
+     - `chats.txt` (for chat messages)
+   - If these files do not exist, the application will create them automatically when data is saved.
+4. **Compile and Run**:
+   - Compile the Java files using your IDE or command line:
+     ```bash
+     javac *.java
+     ```
+   - Run the main class `EventManagementSystem`:
+     ```bash
+     java EventManagementSystem
+     ```
 
-To set up the Event Management System, follow these steps:
+## Usage
+1. **Launch the Application**:
+   - Run the `EventManagementSystem` class to open the main window with "Login" and "Register" tabs.
+2. **Register a User**:
+   - Navigate to the "Register" tab.
+   - Enter a username, password, and select a role (Customer, Project Manager, Service Provider, or Admin).
+   - Click "Register" to create the account.
+3. **Login**:
+   - Navigate to the "Login" tab.
+   - Enter your username and password.
+   - Click "Login" to access the role-specific dashboard.
+4. **Role-Specific Dashboards**:
+   - **Customer**:
+     - Book events by providing event details.
+     - View and manage bookings.
+     - Chat with the assigned Project Manager.
+   - **Project Manager**:
+     - View events assigned to you.
+     - Send price updates to customers.
+     - Communicate with Customers and Service Providers.
+   - **Service Provider**:
+     - View event requests.
+     - Set prices and ready dates for events.
+     - Chat with Project Managers.
+   - **Admin**:
+     - Manage user roles or delete users.
+     - Assign events to Project Managers.
+     - View all events in the system.
+5. **Logout**:
+   - Each dashboard includes a "Logout" tab to close the dashboard window.
 
-1. **Prerequisites**:
-   - Java Development Kit (JDK) installed.
-   - Any IDE that supports Java (e.g., IntelliJ IDEA, Eclipse).
+## File Structure
+- **Source Files**:
+  - `EventManagementSystem.java`: Main application entry point with login and registration UI.
+  - `User.java`: Abstract base class for all user roles.
+  - `Customer.java`: Handles customer-specific functionality (booking, managing events, chatting).
+  - `ProjectManager.java`: Manages assigned events and communication.
+  - `ServiceProvider.java`: Handles event requests and pricing.
+  - `Admin.java`: Manages users and event assignments.
+  - `Event.java`: Represents an event with attributes like ID, customer, status, and price.
+  - `ChatMessage.java`: Represents a chat message with sender, receiver, and timestamp.
+  - `DataHandler.java`: Manages data persistence (users, events, chats) using text files.
+- **Data Files** (created/used by the application):
+  - `users.txt`: Stores user data in the format `username,role,password`.
+  - `events.txt`: Stores event data in the format `eventId|customerUsername|details|status|assignedPM|price|readyDate`.
+  - `chats.txt`: Stores chat messages in the format `sender,receiver,message,timestamp`.
 
-2. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/yourusername/event-management-system.git
-   ```
+## Limitations
+- **No Real-Time Updates**: The UI does not automatically refresh when data changes (e.g., new messages or events). Users must navigate tabs or reopen dashboards to see updates.
+- **Basic Error Handling**: Input validation is minimal, and some errors (e.g., file I/O issues) are printed to the console.
+- **Security**: Passwords are stored in plain text in `users.txt`. In a production environment, passwords should be hashed.
+- **Single-Threaded**: The application is not designed for concurrent access to data files, which may cause issues in a multi-user environment.
 
-3. **Build the Project**:
-   - Open the project in your IDE.
-   - Build the project using the IDE's build tools.
-
-4. **Run the Application**:
-   - Run the `EventManagementSystem.java` class to start the application.
-
-## Directory Structure
-
-```
-EVENT-MANAGEMENT-SYSTEM/
-│
-├── src/
-│   ├── model/
-│   │   ├── Event.java
-│   │   ├── Notification.java
-│   │   └── User.java
-│   ├── service/
-│   │   ├── EventService.java
-│   │   ├── NotificationService.java
-│   │   └── UserService.java
-│   ├── ui/
-│   │   ├── AdminFrame.java
-│   │   ├── CustomerFrame.java
-│   │   ├── LoginFrame.java
-│   │   ├── ProjectManagerFrame.java
-│   │   ├── RegisterFrame.java
-│   │   └── ServiceProviderFrame.java
-│   ├── util/
-│   │   ├── DataAccessObject.java
-│   │   └── FileHandler.java
-│   │
-│   └── EventManagementSystem.java
-```
-
-## Classes and Interfaces
-
-### Model
-
-- **Event**: Represents an event with attributes like name, date, and location.
-- **Notification**: Represents a notification with attributes like message and recipient.
-- **User**: Represents a user with attributes like username and password.
-
-### Service
-
-- **EventService**: Handles operations related to events.
-- **NotificationService**: Handles operations related to notifications.
-- **UserService**: Handles operations related to users.
-
-### UI
-
-- **AdminFrame**: Interface for administrators to manage events and users.
-- **CustomerFrame**: Interface for customers to view events and receive notifications.
-- **LoginFrame**: Login interface for users.
-- **RegisterFrame**: Registration interface for new users.
-
-### Util
-
-- **DataAccessObject**: Handles data persistence operations.
-- **FileHandler**: Manages file operations for data storage.
-- **EventManagementSystem**: Main class that initializes the application.
 
 ## Collaborators and Team Members
 - **Mohammed Ibrahim**:  [GitHub](https://github.com/Mohamediibra7im) | [LinkedIn](https://www.linkedin.com/in/mohammed-ibra7im/)
